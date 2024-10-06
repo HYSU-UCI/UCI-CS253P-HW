@@ -16,8 +16,8 @@ string Library_filename = "myLibrary";
 
 string to_lowercase(string s) {
 
-    for (char c : s) {
-        c = tolower(c);
+    for (int i=0; i<s.size(); i++) {
+        s[i] = tolower(s[i]);
     }
     return s;
 }
@@ -66,8 +66,7 @@ void add_song_to_MusicLibrary(Song song) {
 void remove_song_from_MusicLibrary_by_name(string title) {
 
     int index = find_index_of_song_with_name(title);
-    cout << "index: " << index << endl;
-    if (index <= MusicLibrary.size() && to_lowercase(title) == to_lowercase(MusicLibrary[index].title)) {
+    if (index < MusicLibrary.size() && to_lowercase(title) == to_lowercase(MusicLibrary[index].title)) {
         MusicLibrary.erase(MusicLibrary.begin() + index);
     }
     else {
@@ -85,7 +84,10 @@ void print_look_up(int i) {
 void look_up(string title) {
     
     int index = find_index_of_song_with_name(title);
-    cout<< "not found " << index << endl;
+    if (index >= MusicLibrary.size() || MusicLibrary[index].title != title) {
+        cout<< "not found." << index << endl;
+        return;
+    }
     print_look_up(index);;
 }
 
@@ -208,6 +210,7 @@ int main() {
     while (true) {
         char cmd = read_command();
         evaluate_command(cmd);
+        cout<<endl;
     }
     return 0;
 }
