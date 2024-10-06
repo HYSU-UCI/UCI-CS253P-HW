@@ -68,10 +68,9 @@ void remove_song_from_MusicLibrary_by_name(string title) {
     int index = find_index_of_song_with_name(title);
     if (index < MusicLibrary.size() && to_lowercase(title) == to_lowercase(MusicLibrary[index].title)) {
         MusicLibrary.erase(MusicLibrary.begin() + index);
+        return;
     }
-    else {
-        cout<< "Song not exised, remove failed.\n";
-    }
+    cout<< "Song not exised, remove failed.\n";
 }
 
 void print_look_up(int i) {
@@ -84,18 +83,18 @@ void print_look_up(int i) {
 void look_up(string title) {
     
     int index = find_index_of_song_with_name(title);
-    if (index >= MusicLibrary.size() || MusicLibrary[index].title != title) {
-        cout<< "not found." << index << endl;
+    if (index < MusicLibrary.size() && to_lowercase(title) == to_lowercase(MusicLibrary[index].title)) {
+        print_look_up(index);
         return;
     }
-    print_look_up(index);;
+    cout<< "Song not found." << endl;
 }
 
 void write_song(ofstream& file) {
 
     for (const auto& song : MusicLibrary) {
         file << song.title << endl;
-        file <<  song.artist << endl;
+        file << song.artist << endl;
         file << song.year_published << endl;
     }
 }
